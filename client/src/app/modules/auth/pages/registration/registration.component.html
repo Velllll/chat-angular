@@ -1,0 +1,40 @@
+<div class="body">
+    <div class="window-form">
+        <h2 class="title">Registration</h2>
+        <form [formGroup]="regForm" (ngSubmit)="reg()">
+            <input placeholder="email" formControlName="email" type="text">
+            <div 
+            *ngIf="this.regForm.get('email')?.invalid && this.regForm.get('email')?.touched" 
+            class="err">
+                Email is required
+            </div>
+
+            <input placeholder="password" formControlName="password" type="password">
+            <div 
+            *ngIf="this.regForm.get('password')?.invalid && this.regForm.get('password')?.touched"
+            class="err">
+                Password is required (min length = 8)
+            </div>
+
+            <input placeholder="name" formControlName="name" type="text">
+            <div 
+            *ngIf="this.regForm.get('name')?.invalid && this.regForm.get('name')?.touched"
+            class="err">
+                Name is required
+            </div>
+            <div 
+            *ngIf="userExistErr"
+            class="err">
+                This email have already registered
+            </div>
+            <div class="btn">
+                <button [disabled]="regForm.invalid">Register</button>
+            </div>
+           
+        </form>
+        <div class="register">
+            <span>Do you have an account?</span>
+            <a routerLink="/login"> Login</a> 
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="body">
+    <div class="window-form">
+        <h2 class="title">Sign in to chat</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <input placeholder="email" formControlName="email" type="text">
+            <div 
+            *ngIf="this.loginForm.get('email')?.invalid && this.loginForm.get('email')?.touched" 
+            class="err">
+                Email is required
+            </div>
+
+            <input placeholder="password" formControlName="password" type="password">
+            <div 
+            *ngIf="this.loginForm.get('password')?.invalid && this.loginForm.get('password')?.touched"
+            class="err">
+                Password is required (min length = 8)
+            </div>
+            <div 
+            *ngIf="loginErr"
+            class="err">
+                Wrong email or password
+            </div>
+            <div class="btn">
+                <button [disabled]="loginForm.invalid">Login</button>
+            </div>
+           
+        </form>
+        <div class="register">
+            <span>Do not have an account?</span>
+            <a routerLink="/registration"> Register</a> 
+        </div>
+    </div>
+</div>
