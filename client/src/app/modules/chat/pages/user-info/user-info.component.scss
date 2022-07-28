@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .back {
+        position: absolute;
+        top: 20px;
+        color: black;
+        left: 15px;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .usericon {
+        font-size: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 100px;
+        background-color: rgb(202, 115, 115);
+        border: 1px solid rgb(202, 115, 115);
+        color: rgb(255, 255, 255);
+        border-radius: 50%;
+        margin: 70px 0 20px;
+    }
+    .name {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
+    .email {
+        font-size: 20px;
+        margin-bottom: 60px; 
+    }
+
+    .btn{
+        button{
+            padding: 0 30px;
+            font-size: 30px;
+            line-height: 40px;
+            font-size: 30px;
+            background-color: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
+        }
+    }
+}
+
+.loading {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 60px;
+}

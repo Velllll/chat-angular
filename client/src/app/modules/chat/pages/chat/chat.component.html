@@ -1,0 +1,43 @@
+<div class="conteiner">
+    <header>
+        <div class="info" *ngIf="userInfo$ | async as userInfo; else loader">
+            <div class="back" (click)="goBack()">< Back</div>
+            <div class="name" (click)="goToUserInfo()">{{userInfo.name}}</div>
+            <div class="icon" (click)="goToUserInfo()">{{userInfo.name.slice(0, 1).toUpperCase()}}</div>
+        </div>
+    </header>
+    <ng-template #loader>
+        <div class="loading">
+            Loading...
+        </div>
+    </ng-template>
+
+    <div class="empty" *ngIf="!messagesArray.length">
+        You don't have messages
+    </div>
+
+    <div *ngFor="let message of messagesArray">
+        <div [class]="{'message-conteinder': true, sender: myID === message.senderID, recipient: myID !== message.senderID}">
+            <div class="msg-body">
+                <div class="msg">
+                    {{message.message}}
+                </div>
+                <div class="date">
+                    {{message.date.toLocaleString() | date}}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="input-container">
+        <div class="row">
+            <div class="text">
+                <input [(ngModel)]="message" type="text">
+                <button (click)="sendMessage()">></button>
+            </div>
+        </div>
+    </div>   
+</div>
+
+

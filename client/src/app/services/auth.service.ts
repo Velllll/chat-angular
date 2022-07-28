@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
@@ -8,7 +9,8 @@ import { map } from 'rxjs';
 export class AuthService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) { }
 
   setToken(token: string) {
@@ -26,5 +28,16 @@ export class AuthService {
     .pipe(
       map(r => !!r.email)
     )
+  }
+
+  getUserInfo() {
+    return this.http.get<any>('http://localhost:5000/api/islogin', {
+      headers: {"Authorization": "Bearer " + this.getToken()}
+    })
+  }
+
+  logout() {
+    localStorage.removeItem('access_token')
+    this.router.navigate(['/login'])
   }
 }

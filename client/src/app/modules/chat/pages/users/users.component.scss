@@ -1,0 +1,56 @@
+.users {
+    padding-bottom: 70px;
+
+    .user {
+        max-width: 100%;
+        padding: 10px;
+        cursor: pointer;
+        
+        .info-row {
+            display: flex;
+            align-items: center;
+
+            .icon {
+                background-color: rgb(202, 115, 115);
+                border: 1px solid rgb(202, 115, 115);
+                color: white;
+                line-height: 50px;
+                height: 50px;
+                width: 50px;
+                display: flex;
+                justify-content: center;
+                align-items:center;
+                border-radius: 50%;
+                margin-right: 15px;
+                font-size: 30px;
+            }
+            .info-body {
+                .name {
+                    font-size: 30px;
+                    line-height: 35px;
+                    font-weight: 700;
+                }
+        
+                .email {
+                    font-size: 20px;
+                    line-height: 25px;
+                    word-break: break-all;
+                }
+            }
+        }
+
+
+        .line {
+            margin-top: 5px;
+            height: 1px;
+            width: 100%;
+            background-color: black;
+        }
+    }
+}
+
+.loading {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 60px;
+}

@@ -1,0 +1,10 @@
+<div class="container" *ngIf="userInfo$ | async as userInfo">
+    <div class="usericon">
+        {{userInfo[0].name.slice(0, 1).toUpperCase()}}
+    </div>
+    <div class="name">{{userInfo[0].name}}</div>
+    <div class="email">Email: {{userInfo[0].email}}</div>
+    <div class="btn">
+        <button (click)="logout()">Logout</button>
+    </div>
+</div>

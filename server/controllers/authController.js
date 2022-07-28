@@ -22,7 +22,7 @@ class authController {
         })
         .catch(err => {
             console.log(err)
-            res.json({message: err.sqlMessage})
+            res.json({message: "Duplicate"})
         }) 
     }   
 
@@ -43,7 +43,7 @@ class authController {
     }
 
     async isLogin(req, res) {
-        const token = req.headers.auth.split(' ')[1]
+        const token = req.headers.authorization.split(' ')[1]
         try {
             if(!token) return res.json({message: 'USER IS NOT LOGIN'})
             const payload = jwt.verify(token, secret_key)

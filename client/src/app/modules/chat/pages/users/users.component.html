@@ -1,0 +1,12 @@
+<div class="users" *ngIf="users$ | async as users">
+    <div  class="user" *ngFor="let user of users">
+        <div class="info-row" (click)="openChat(user.userID)">
+            <div class="icon"><span>{{user.name.slice(0, 1).toUpperCase()}}</span></div>
+            <div class="info-body">
+                <div class="name">{{user.name}}</div>
+                <div class="email">{{user.email}}</div>
+            </div>
+        </div>
+        <div class="line"></div>
+    </div>
+</div>
