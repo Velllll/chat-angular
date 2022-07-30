@@ -5,6 +5,7 @@ const aWss = WSserver.getWss()
 require('dotenv').config({path: '.env.local'})
 const authRouter = require('./routers/authRouter')
 const userRouter = require('./routers/userRouter')
+const messagesRouter = require('./routers/messagesRouter')
 const cors = require('cors')
 const wsHandler = require('./controllers/wsHandler')
 const ws = new wsHandler(aWss)
@@ -18,6 +19,7 @@ app.ws('/ws', ws.ws)
 
 app.use('/api', authRouter)
 app.use('/api', userRouter)
+app.use('/api', messagesRouter)
 
 const startServer = () => {
     try {

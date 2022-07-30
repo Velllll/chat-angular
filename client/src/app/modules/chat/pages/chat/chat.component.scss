@@ -1,9 +1,10 @@
 .conteiner {
     padding-bottom: 140px;
     padding-top: 70px;
-    overflow: hidden;
+ 
     position: relative;
     .empty {
+        
         text-align: center;
         margin-top: 170px;
         font-size: 30px;
@@ -36,13 +37,18 @@
             justify-content: space-between;
             align-items: center;
             height: 70px;
-
             
-
             .back {
                 font-size: 30px;
                 margin: 0 15px;
                 cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                span {
+                    margin-left: 5px;
+                }
             }
 
             .name {
@@ -57,7 +63,8 @@
                 line-height: 50px;
                 height: 50px;
                 width: 50px;
-                border: 1px solid rgb(255, 255, 255);
+                background-color: rgb(202, 115, 115);
+                color: rgb(255, 255, 255);
                 text-align: center;
                 border-radius: 50%;
                 cursor: pointer;
@@ -142,11 +149,7 @@
                     color: rgb(255, 255, 255);
                     border-radius: 50%;
                 }
-
             }
-        }
-
-
-            
+        }      
     }
 }

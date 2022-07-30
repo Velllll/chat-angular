@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo$ = this.http.get<IUser[]>('http://localhost:5000/api/profileinfo', {
-      headers: {"Authtorization": "Bearer " + this.authService.getToken()}
+      headers: {"Authorization": "Bearer " + this.authService.getToken()}
     })
   }
 

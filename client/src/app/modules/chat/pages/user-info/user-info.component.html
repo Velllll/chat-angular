@@ -1,5 +1,5 @@
 <div class="container" *ngIf="userInfo$ | async as user">
-    <div class="back" (click)="goBack()">< Back</div>
+    <div class="back" (click)="goBack()">...Back</div>
     <div class="usericon">
         {{user.name.slice(0, 1).toUpperCase()}}
     </div>

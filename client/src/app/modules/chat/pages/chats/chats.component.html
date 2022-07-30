@@ -1,14 +1,14 @@
 <div class="chats">
-    <div class="empty" *ngIf="false">
+    <div class="empty" *ngIf="!userInfoArr.length">
         You don't have chats
     </div>
 
-    <div class="chat">
-        <div class="info-row">
-            <div class="icon"><span>N</span></div>
+    <div class="chat" *ngFor="let user of userInfoArr">
+        <div class="info-row" (click)="goToChat(user.userID)">
+            <div class="icon"><span>{{user.name.slice(0, 1).toUpperCase()}}</span></div>
             <div class="info-body">
-                <div class="name">Name</div>
-                <div class="last-message">{{"hi i bought beer ledaslkmdaskldadjaksl gfjlkgd dfjk gd".slice(0, 30) + "..."}}</div>
+                <div class="name">{{user.name}}</div>
+                <div class="email">{{user.email}}</div>
             </div>
         </div>
         <div class="line"></div>

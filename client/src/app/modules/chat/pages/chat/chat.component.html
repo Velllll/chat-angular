@@ -1,7 +1,9 @@
 <div class="conteiner">
     <header>
         <div class="info" *ngIf="userInfo$ | async as userInfo; else loader">
-            <div class="back" (click)="goBack()">< Back</div>
+            <div class="back" (click)="goBack()">
+                <span>...Back</span> 
+            </div>
             <div class="name" (click)="goToUserInfo()">{{userInfo.name}}</div>
             <div class="icon" (click)="goToUserInfo()">{{userInfo.name.slice(0, 1).toUpperCase()}}</div>
         </div>
@@ -16,7 +18,7 @@
         You don't have messages
     </div>
 
-    <div *ngFor="let message of messagesArray">
+    <div class="messages" *ngFor="let message of messagesArray">
         <div [class]="{'message-conteinder': true, sender: myID === message.senderID, recipient: myID !== message.senderID}">
             <div class="msg-body">
                 <div class="msg">

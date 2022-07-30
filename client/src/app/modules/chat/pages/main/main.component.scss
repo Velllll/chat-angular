@@ -15,23 +15,29 @@
         line-height: 50px;
         height: 70px;
 
-        a {
-            color: rgb(255, 255, 255);
-        }
         
-        .users {
-            border: 1px white solid;
+        
+        div {
+            height: 60px;
+            width: 60px;
+            font-size: 10px;
             padding: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            a {
+                display: flex;
+            justify-content: center;
+            align-items: center;
+                color: rgb(255, 255, 255);
+                img {
+                    height: 40px;
+                }
+            }
+
+            
         }
     
-        .chats {
-            border: 1px white solid;
-            padding: 0 10px;
-        }
-    
-        .settings {
-            border: 1px white solid;
-            padding: 0 10px;
-        }
     }
 }

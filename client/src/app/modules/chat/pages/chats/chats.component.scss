@@ -1,10 +1,11 @@
 .chats {
     padding-bottom: 70px;
-
+    overflow: hidden;
     .empty {
         text-align: center;
         margin-top: 80px;
         font-size: 30px;
+        
     }
 
     .chat {
@@ -21,8 +22,8 @@
                 border: 1px solid rgb(202, 115, 115);
                 color: white;
                 line-height: 50px;
-                height: 50px;
-                width: 50px;
+                height: 70px;
+                width: 70px;
                 display: flex;
                 justify-content: center;
                 align-items:center;
@@ -32,16 +33,16 @@
             }
             .info-body {
                 .name {
-                    font-size: 30px;
+                    font-size: 35px;
                     line-height: 35px;
                     font-weight: 700;
                 }
         
-                .last-message {
+                .email {
                     font-size: 20px;
                     line-height: 25px;
-                    // word-wrap: break-word;
                     word-break: break-all;
+                    margin: 10px 0;
                 }
             }
         }

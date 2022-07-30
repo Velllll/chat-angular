@@ -1,8 +1,8 @@
 import { AuthService } from './../../../../services/auth.service';
 import { IUser, IMessage } from './../../interfaces';
-import { Observable, take } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -11,10 +11,10 @@ import { Location } from '@angular/common';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   userInfo$!: Observable<IUser>
-  ws: WebSocket = new WebSocket('ws://localhost:5000/ws')
+  ws!: WebSocket
   message: string = ''
   userID = this.router.url.split('/')[2]
   myID!: number
@@ -28,8 +28,8 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id = this.router.url.split('/')[2]
-    this.userInfo$ = this.http.get<IUser>('http://localhost:5000/api/user/' + id)
+    this.userInfo$ = this.http.get<IUser>('http://localhost:5000/api/user/' + this.userID)
+
     this.authService.getUserInfo()
     .pipe(
       take(1)
@@ -37,6 +37,7 @@ export class ChatComponent implements OnInit {
     .subscribe({
       next: data => {
         this.myID = data.id
+        this.ws = new WebSocket('ws://localhost:5000/ws')
         this.ws.onopen = () => {
           this.ws.send(JSON.stringify({
             method: 'connection',
@@ -44,21 +45,36 @@ export class ChatComponent implements OnInit {
             senderID: this.myID,
           }))
         }
+        this.ws.onmessage = (event) => {
+          const msg = JSON.parse(event.data)
+          console.log(msg)
+          if(msg.method !== 'connection') this.messagesArray.push(msg)
+        }
+        this.ws.onclose = () => {
+          console.log('ws close')
+        }
+        this.ws.onerror = () => {
+          console.log('error ws')
+        }
       }
     })
+    this.http.get<any>('http://localhost:5000/api/messages/' + this.userID, {
+      headers: {"Authorization": "Bearer " + this.authService.getToken()}
+    })
+    .pipe(
+      take(1)
+    )
+    .subscribe({
+      next: data => this.messagesArray = [...this.messagesArray, ...data]
+    })
+  }
+
+  ngAfterViewInit(): void {
     
-    
-    this.ws.onmessage = (event) => {
-      const msg = JSON.parse(event.data)
-      console.log(msg)
-      if(msg.method !== 'connection') this.messagesArray.push(msg)
-    }
-    this.ws.onclose = () => {
-      console.log('ws close')
-    }
-    this.ws.onerror = () => {
-      console.log('error ws')
-    }
+  }
+
+  ngAfterViewChecked(): void {
+    document.querySelector("html")!.scrollTop =  document.querySelector("html")!.scrollHeight
   }
 
   goToUserInfo() {
@@ -70,6 +86,14 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
+    if(this.messagesArray.length === 0) {
+      console.log('chat created')
+      this.ws.send(JSON.stringify({
+        method: 'create-chat',
+        senderID: this.myID,
+        recipientID: +this.userID,
+      }))
+    }
     this.ws.send(JSON.stringify({
       method: 'message',
       message: this.message,
@@ -80,7 +104,4 @@ export class ChatComponent implements OnInit {
     this.message = ''
   }
 
-  show() {
-    console.log(this.messagesArray)
-  }
 }
