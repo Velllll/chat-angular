@@ -1,6 +1,6 @@
 import { AuthService } from './../../../../services/auth.service';
 import { IUsers } from './../../interfaces';
-import { Observable, take, tap } from 'rxjs';
+import { Observable, switchMap, take, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -23,18 +23,12 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.getUserInfo()
+    this.users$ = this.authService.getUserInfo()
     .pipe(
-      take(1)
+      switchMap(user => 
+        this.http.get<IUsers[]>('http://localhost:5000/api/users/' + user.id)
+      )
     )
-    .subscribe({
-      next: data => {
-        this.myID = data.id
-        this.users$ = this.http.get<IUsers[]>('http://localhost:5000/api/users/' + this.myID)
-      }
-    })
-
-    
   }
 
   openChat(userID: number) {

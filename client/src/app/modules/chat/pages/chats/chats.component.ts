@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { IChats, IUser, IUsers } from './../../interfaces';
-import { map, pipe, take, tap } from 'rxjs';
+import { concat, concatMap, forkJoin, from, interval, map, merge, mergeMap, observable, of, pipe, scan, switchMap, take, tap } from 'rxjs';
 import { AuthService } from './../../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
 export class ChatsComponent implements OnInit {
 
   userInfoArr: IUsers[] = []
-
+  users: any
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -21,28 +21,23 @@ export class ChatsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.http.get<IChats[]>('http://localhost:5000/api/mychats', {
+    this.users = this.http.get<number[]>('http://localhost:5000/api/mychats', {
         headers: {"Authorization": "Bearer " + this.authService.getToken()}
       })
     .pipe(
-      take(1)
-    )
-    .subscribe({
-      next: d => {
-        d.forEach(id => {
-          this.http.get<IUsers>('http://localhost:5000/api/user/' + id)
-          .pipe(
-            take(1)
-          )
-          .subscribe({
-            next: userInfo => this.userInfoArr.push(userInfo)
+      take(1),
+      switchMap(arr => {
+        return from(arr).pipe(
+          map(id => {
+            return this.http.get<IUsers>('http://localhost:5000/api/user/' + id)
           })
-        })
-      }
-    })
+        )
+      }),
+      mergeMap(o => o),
+      tap(data => this.userInfoArr.push(data))
+    )
+    .subscribe()
   }
-
 
   goToChat(id: number) {
     this.router.navigate(['/chat/', id])

@@ -14,7 +14,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.router.url === "/") this.router.navigate(['/chats'])
-    
   }
 
 }

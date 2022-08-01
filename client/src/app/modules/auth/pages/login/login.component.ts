@@ -1,7 +1,7 @@
 import { AuthService } from './../../../../services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, take, tap } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -10,11 +10,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit{
 
   loginForm!: FormGroup
-  response$?: Observable<{message?: string, token?: string}>
-  responseSubscription?: Subscription
   loginErr: boolean = false
 
   constructor(
@@ -25,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      "email": new FormControl('user@user.com', 
+      "email": new FormControl('', 
       [Validators.required, Validators.email]
       ),
       "password": new FormControl('user1234', 
@@ -34,22 +32,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy(): void {
-    this.responseSubscription?.unsubscribe()
-  }
-
   login() {
-    this.response$ = this.http.post<{message?: string, token?: string}>('http://localhost:5000/api/login', this.loginForm.value)
-    this.responseSubscription = this.response$.subscribe({
-      next: r => {
+    this.http.post<{message?: string, token?: string}>('http://localhost:5000/api/login', this.loginForm.value)
+    .pipe(
+      take(1),
+      tap(r => {
         if(!(r.message)) {
           this.authService.setToken(r.token!)
           this.router.navigate(['/chats']) 
         } else {
           this.loginErr = true
         }
-      }
-    })
-    
+      })
+    )
+    .subscribe()
   }
 }

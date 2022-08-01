@@ -1,6 +1,6 @@
 import { AuthService } from './../../../../services/auth.service';
 import { IUser, IMessage } from './../../interfaces';
-import { Observable, take, tap } from 'rxjs';
+import { Observable, Subject, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class ChatComponent implements OnInit, AfterViewChecked {
 
   userInfo$!: Observable<IUser>
   ws!: WebSocket
@@ -48,7 +48,9 @@ export class ChatComponent implements OnInit, AfterViewInit, AfterViewChecked {
         this.ws.onmessage = (event) => {
           const msg = JSON.parse(event.data)
           console.log(msg)
-          if(msg.method !== 'connection') this.messagesArray.push(msg)
+          if(msg.method !== 'connection') {
+            this.messagesArray.push(msg)
+          }
         }
         this.ws.onclose = () => {
           console.log('ws close')
@@ -58,19 +60,14 @@ export class ChatComponent implements OnInit, AfterViewInit, AfterViewChecked {
         }
       }
     })
+
     this.http.get<any>('http://localhost:5000/api/messages/' + this.userID, {
       headers: {"Authorization": "Bearer " + this.authService.getToken()}
     })
     .pipe(
       take(1)
     )
-    .subscribe({
-      next: data => this.messagesArray = [...this.messagesArray, ...data]
-    })
-  }
-
-  ngAfterViewInit(): void {
-    
+    .subscribe(data => this.messagesArray = [...this.messagesArray, ...data])
   }
 
   ngAfterViewChecked(): void {
