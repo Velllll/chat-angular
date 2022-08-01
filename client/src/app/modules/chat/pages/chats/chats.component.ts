@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
-import { IChats, IUser, IUsers } from './../../interfaces';
-import { concat, concatMap, forkJoin, from, interval, map, merge, mergeMap, observable, of, pipe, scan, switchMap, take, tap } from 'rxjs';
+import { IUsers } from './../../interfaces';
+import { from, map, mergeMap, switchMap, take, tap } from 'rxjs';
 import { AuthService } from './../../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';

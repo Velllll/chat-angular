@@ -117,6 +117,7 @@
         bottom: 0;
         left: 0;
         right: 0;
+        width: 100%;
         background-color: rgba(255, 255, 255, 0.9);
         bottom: 70px;
         height: 70px;
@@ -125,14 +126,14 @@
         align-items: center;
         .row {
             color: rgb(0, 0, 0);
-
+            max-width: 800px;
             .text {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 input {
                     background-color: rgb(0, 0, 0, 0.9);
-                    width: 300px;
+                    width: 80%;
                     height: 40px;
                     color: rgb(255, 255, 255);
                     padding: 0 10px;

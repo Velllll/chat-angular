@@ -6,6 +6,7 @@ const userCheckMiddleware = require('../middlewares/userCheckMiddleware')
 router.get('/profileinfo', userCheckMiddleware, userController.profileInfo)
 router.get('/users/:id', userController.getUsers)
 router.get('/user/:id', userController.getUserById)
+router.get('/usersbyemail/:email', userController.searchUsersByEmail)
 router.get('/mychats', userCheckMiddleware, userController.getMyChats)
 
 module.exports = router

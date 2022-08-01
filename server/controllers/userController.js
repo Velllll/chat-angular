@@ -45,11 +45,21 @@ class chatController {
                 .slice(1)
                 .filter(c => c !== myID)[0]
             })
+            .filter(value => value)
             res.json(usersID)
         })
         .catch(err => {
             console.log(err)
         })
+    }
+
+    async searchUsersByEmail(req, res) {
+        const email = req.params.email
+        db.query(`SELECT email, name, userID FROM users WHERE email like '%${email}%'`)
+        .then(data => {
+            res.json(data[0])
+        })
+        .catch(err => console.log(err))
     }
 }
 

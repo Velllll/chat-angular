@@ -1,3 +1,20 @@
+<div class="search">
+    <div class="search-container">
+        <input #search (ngModel)="search" placeholder="..." type="text">
+    </div>
+    <div *ngIf="users$ | async as users; else info">
+        <div *ngIf="search.value && !users.length" class="not-found">
+            Email not found
+        </div>
+    </div>
+    <ng-template #info>
+        <div *ngIf="true" class="not-found">
+            Search user by email
+        </div>
+    </ng-template>
+</div>
+
+
 <div class="users" *ngIf="users$ | async as users">
     <div  class="user" *ngFor="let user of users">
         <div class="info-row" (click)="openChat(user.userID)">

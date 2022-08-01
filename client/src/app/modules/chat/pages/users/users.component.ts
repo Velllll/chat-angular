@@ -1,9 +1,9 @@
 import { AuthService } from './../../../../services/auth.service';
 import { IUsers } from './../../interfaces';
-import { Observable, switchMap, take, tap } from 'rxjs';
+import { debounceTime, filter, fromEvent, map, Observable, of, switchMap, tap} from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 
 
@@ -13,21 +13,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  users$!: Observable<IUsers[]>
-  myID: number = 5
 
+  @ViewChild('search', {static: true}) search!: ElementRef
+
+  users$!: Observable<IUsers[]>
+  
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.users$ = this.authService.getUserInfo()
+    this.users$ = fromEvent(this.search.nativeElement, 'keyup')
     .pipe(
-      switchMap(user => 
-        this.http.get<IUsers[]>('http://localhost:5000/api/users/' + user.id)
-      )
+      map((event: any) => event.target.value),
+      debounceTime(500),
+      switchMap(value => {
+        if(value === '') return of([])
+        return this.http.get<IUsers[]>("http://localhost:5000/api/usersbyemail/" + value)
+      })
     )
   }
 

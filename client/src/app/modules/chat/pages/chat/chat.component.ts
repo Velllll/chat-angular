@@ -1,6 +1,6 @@
 import { AuthService } from './../../../../services/auth.service';
 import { IUser, IMessage } from './../../interfaces';
-import { Observable, Subject, take, tap } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.authService.getUserInfo()
     .pipe(
-      take(1)
+      take(1),
     )
     .subscribe({
       next: data => {
@@ -47,7 +47,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         }
         this.ws.onmessage = (event) => {
           const msg = JSON.parse(event.data)
-          console.log(msg)
           if(msg.method !== 'connection') {
             this.messagesArray.push(msg)
           }
@@ -84,7 +83,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   sendMessage() {
     if(this.messagesArray.length === 0) {
-      console.log('chat created')
       this.ws.send(JSON.stringify({
         method: 'create-chat',
         senderID: this.myID,

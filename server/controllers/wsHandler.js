@@ -38,8 +38,9 @@ class ws{
 
     broadcastConnection = (ws, msg) => {
         this.aWss.clients.forEach(client => {  
-            if(client.id === msg.recipientID) client.send(JSON.stringify(msg))
-            if(client.id === msg.senderID) client.send(JSON.stringify(msg))
+            if(client.id === msg.senderID, client.id === msg.recipientID) return client.send(JSON.stringify(msg))
+            if(client.id === msg.recipientID) return client.send(JSON.stringify(msg))
+            if(client.id === msg.senderID) return client.send(JSON.stringify(msg)) 
         })
     }
 }
