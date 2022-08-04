@@ -1,14 +1,18 @@
 <div class="conteiner">
     <router-outlet></router-outlet>
     <footer class="panel">
-        <div class="users"><a routerLink="/users">
-            <img src="../../../../../assets/icons/user (1).png" alt="users">
-        </a></div>
-        <div class="chats"><a routerLink="/chats">
-            <img src="../../../../../assets/icons/messenger.png" alt="users">
-        </a></div>
-        <div class="settings"><a routerLink="/settings">
-            <img src="../../../../../assets/icons/setting.png" alt="users">
-        </a></div>
+        <div class="panel-container">
+           
+            <div class="users"><a routerLink="/users">
+                <mat-icon class="icon">search</mat-icon>
+            </a></div>
+            <div class="chats"><a routerLink="/chats">
+                <mat-icon class="icon">home</mat-icon>
+               
+            </a></div>
+            <div class="settings"><a routerLink="/settings">
+                <mat-icon class="icon">settings</mat-icon>
+            </a></div>
+        </div>
     </footer>
 </div>

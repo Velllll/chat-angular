@@ -1,6 +1,7 @@
 export interface IUser {
   email: string;
   name: string;
+  photoPath?: string;
 }
 
 export interface IUsers extends IUser {

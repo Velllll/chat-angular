@@ -1,6 +1,8 @@
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule} from '@angular/material/input';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatsComponent } from './pages/chats/chats.component';
 import { UsersComponent } from './pages/users/users.component';
@@ -23,7 +25,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ChatRoutingModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
   ]
 })
 export class ChatModule { }

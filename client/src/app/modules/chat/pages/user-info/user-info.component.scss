@@ -7,11 +7,12 @@
 
     .back {
         position: absolute;
-        top: 20px;
+        top: 25px;
         color: black;
-        left: 15px;
-        font-size: 30px;
+        left: 19px;
+        font-size: 20px;
         cursor: pointer;
+        z-index: 10;
     }
 
     .usericon {
@@ -27,9 +28,27 @@
         border-radius: 50%;
         margin: 70px 0 20px;
     }
+
+    .usericon-photo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 340px;
+        width: 340px;
+        margin-top: 10px;
+
+        img {
+            height: 340px;
+            width: 340px;
+            object-fit: cover;
+            opacity: 0.9;
+            
+        }
+    }
     .name {
         font-size: 40px;
         margin-bottom: 20px;
+        margin-top: 30px;
     }
 
     .email {

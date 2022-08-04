@@ -8,12 +8,10 @@ class ws{
     ws = (ws) => {
         ws.on('message', message => {
             const msg = JSON.parse(message)
-            console.log(msg)
             switch (msg.method) {
                 case 'connection':
                     ws.send(JSON.stringify(msg))
                     ws.id = msg.senderID
-                    console.log(msg)
                     break;
                 case 'message':
                     this.broadcastConnection(ws, msg)
@@ -24,12 +22,16 @@ class ws{
                         console.log('message error')
                     })
                     break;
+                case 'message-file':
+                    
+                    break;
                 case 'create-chat':
                     db.query('INSERT INTO userchats(senderID, recipientID) values(?, ?)', [msg.senderID, msg.recipientID])
                     .catch(err => {
                         console.log('create chat error')
                     })
                     break;
+                
             }
         })
     } 

@@ -1,11 +1,12 @@
 <div class="chats">
-    <div class="empty" *ngIf="!userInfoArr.length">
-        You don't have chats
-    </div>
-
     <div class="chat" *ngFor="let user of userInfoArr">
         <div class="info-row" (click)="goToChat(user.userID)">
-            <div class="icon"><span>{{user.name.slice(0, 1).toUpperCase()}}</span></div>
+            <div class="icon" *ngIf="!user.photoPath; else iconPhoto"><span>{{user.name.slice(0, 1).toUpperCase()}}</span></div>
+            <ng-template #iconPhoto>
+                <div class="iconPhoto">
+                    <img [src]="user.photoPath" alt="">
+                </div>
+            </ng-template>
             <div class="info-body">
                 <div class="name">{{user.name}}</div>
                 <div class="email">{{user.email}}</div>

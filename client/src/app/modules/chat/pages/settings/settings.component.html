@@ -1,10 +1,26 @@
 <div class="container" *ngIf="userInfo$ | async as userInfo">
-    <div class="usericon">
+    <div class="usericon" *ngIf="!userPhotos.length">
         {{userInfo[0].name.slice(0, 1).toUpperCase()}}
     </div>
-    <div class="name">{{userInfo[0].name}}</div>
-    <div class="email">Email: {{userInfo[0].email}}</div>
-    <div class="btn">
-        <button (click)="logout()">Logout</button>
+
+    <div class="photo-conteiner" *ngIf="userPhotos.length">
+        <mat-icon class="prev" *ngIf="userPhotos.length > 1" (click)="prevPhoto()">chevron_left</mat-icon>
+        <div class="usericon-photo">
+            <img class="main-photo" [src]="userPhotos[getPos()].filePath" alt="">
+        </div>
+        <mat-icon class="next" *ngIf="userPhotos.length > 1" (click)="nextPhoto()">navigate_next</mat-icon>
     </div>
+    
+
+    <div [class]="{name: true}">{{userInfo[0].name}}</div>
+    <div class="email">Email: {{userInfo[0].email}}</div>
+
+    <input #select class="hidden" accept=".jpg, .png" type="file">
+    <button class="set" mat-raised-button (click)="setPhoto()">Set photo</button>
+    
+    <div class="btn">
+        <button mat-raised-button (click)="logout()">Logout</button>
+    </div>
+
+
 </div>

@@ -99,4 +99,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.message = ''
   }
 
+  addFile() {
+    
+  }
+
 }

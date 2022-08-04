@@ -8,5 +8,7 @@ router.get('/users/:id', userController.getUsers)
 router.get('/user/:id', userController.getUserById)
 router.get('/usersbyemail/:email', userController.searchUsersByEmail)
 router.get('/mychats', userCheckMiddleware, userController.getMyChats)
+router.post('/myphotos', userCheckMiddleware, userController.setPhoto)
+router.get('/photos/:userid', userController.getProfilePhotos)
 
 module.exports = router

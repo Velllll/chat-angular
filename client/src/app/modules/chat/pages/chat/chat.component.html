@@ -5,7 +5,12 @@
                 <span>...Back</span> 
             </div>
             <div class="name" (click)="goToUserInfo()">{{userInfo.name}}</div>
-            <div class="icon" (click)="goToUserInfo()">{{userInfo.name.slice(0, 1).toUpperCase()}}</div>
+            <div class="icon" *ngIf="!userInfo.photoPath; else iconPhoto" (click)="goToUserInfo()">{{userInfo.name.slice(0, 1).toUpperCase()}}</div>
+            <ng-template #iconPhoto>
+                <div (click)="goToUserInfo()" class="iconPhoto">
+                    <img [src]="userInfo.photoPath" alt="">
+                </div>
+            </ng-template>
         </div>
     </header>
     <ng-template #loader>
@@ -35,8 +40,9 @@
     <div class="input-container">
         <div class="row">
             <div class="text">
+                <mat-icon (click)="addFile()" class="attach">add_photo_alternate</mat-icon>
                 <input [(ngModel)]="message" type="text">
-                <button (click)="sendMessage()">></button>
+                <mat-icon (click)="sendMessage()" class="icon-send">expand_less</mat-icon>
             </div>
         </div>
     </div>   
