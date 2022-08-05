@@ -11,6 +11,7 @@ import { ChatComponent } from './pages/chat/chat.component';
 import { MainComponent } from './pages/main/main.component';
 import { UserInfoComponent } from './pages/user-info/user-info.component';
 import { FormsModule } from '@angular/forms';
+import { CaruselComponent } from './components/carusel/carusel.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     SettingsComponent,
     ChatComponent,
     MainComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    CaruselComponent
   ],
   imports: [
     CommonModule,

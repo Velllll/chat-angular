@@ -9,6 +9,7 @@
         color: rgb(0, 0, 0);
         height: 700px;
         margin-top: 100px;
+        width: 370px;
 
         h2 {    
             text-align: center;
@@ -17,14 +18,18 @@
         }
 
         form {
-            input {
-                padding: 0 20px;
-                font-size: 30px;
-                line-height: 50px;
-                color: rgb(0, 0, 0);
-                display: block;
-                margin-bottom: 30px;
-                border: rgb(0, 0, 0) 1px solid;
+            text-align: center;
+
+            .full-width {
+                width: 80%;
+                
+                input {
+                    background-color:rgb(241, 240, 240);
+                    line-height: 40px;
+                    font-size: 30px;
+                    padding: 0 10px;
+                    border-radius: 10px;
+                }
             }
 
             .err {

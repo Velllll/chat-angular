@@ -40,9 +40,14 @@
     <div class="input-container">
         <div class="row">
             <div class="text">
+                <input 
+                #select
+                accept=".jpg, .png" 
+                class="hidden" 
+                type="file">
                 <mat-icon (click)="addFile()" class="attach">add_photo_alternate</mat-icon>
                 <input [(ngModel)]="message" type="text">
-                <mat-icon (click)="sendMessage()" class="icon-send">expand_less</mat-icon>
+                <button [disabled]="!message" (click)="sendMessage()"><mat-icon class="icon-send">expand_less</mat-icon></button>
             </div>
         </div>
     </div>   

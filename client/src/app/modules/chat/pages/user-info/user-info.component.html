@@ -1,15 +1,11 @@
 <div class="container" *ngIf="userInfo$ | async as user">
     <div class="back" (click)="goBack()">...Back</div>
     
-    <div class="usericon" *ngIf="!user.photoPath; else photo">
+    <div class="usericon" *ngIf="!user.photoPath">
         {{user.name.slice(0, 1).toUpperCase()}}
     </div>
-    <ng-template #photo>
-        <div class="usericon-photo">
-            <img class="main-photo" [src]="user.photoPath" alt="">
-        </div>
-    </ng-template>
     
+    <carusel [userPhotos]="userPhotos"></carusel>
 
     <div class="name">{{user.name}}</div>
     <div class="email">Email: {{user.email}}</div>

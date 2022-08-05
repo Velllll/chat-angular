@@ -13,6 +13,8 @@ import { Location } from '@angular/common';
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
 
+  @ViewChild('select', {static: true}) select!: ElementRef<HTMLInputElement>
+
   userInfo$!: Observable<IUser>
   ws!: WebSocket
   message: string = ''
@@ -100,7 +102,23 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   addFile() {
-    
+    this.select.nativeElement.click()
+    this.select.nativeElement.onchange = () => {
+      const file: File = this.select.nativeElement.files![0]
+      if (!file) {
+        return
+      }
+      if (file.size > 10000000) {
+        console.log('File should be smaller than 1MB')
+        return
+      }
+      // this.sendFile(file)
+    }
+  }
+
+  sendFile(file: File) {
+    this.ws.send
+    console.log('asd')
   }
 
 }

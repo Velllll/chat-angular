@@ -1,0 +1,7 @@
+<div class="photo-conteiner" *ngIf="userPhotos.length">
+    <mat-icon class="prev" *ngIf="userPhotos.length > 1" (click)="prevPhoto()">chevron_left</mat-icon>
+    <div class="usericon-photo">
+        <img class="main-photo" [src]="userPhotos[getPos()].filePath" alt="">
+    </div>
+    <mat-icon class="next" *ngIf="userPhotos.length > 1" (click)="nextPhoto()">navigate_next</mat-icon>
+</div>

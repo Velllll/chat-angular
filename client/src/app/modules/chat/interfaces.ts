@@ -21,3 +21,9 @@ export interface IChats {
   senderID: number;
   recipientID: number;
 }
+
+export interface IPhotos {
+  photoID: number;
+  userID: number;
+  photoPath: string
+}

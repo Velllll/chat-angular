@@ -2,21 +2,26 @@
     <div class="window-form">
         <h2 class="title">Registration</h2>
         <form [formGroup]="regForm" (ngSubmit)="reg()">
-            <input placeholder="email" formControlName="email" type="text">
+            <mat-form-field class="full-width" appearance="legacy">
+                Email <input matInput formControlName="email" type="text">
+            </mat-form-field>
             <div 
             *ngIf="this.regForm.get('email')?.invalid && this.regForm.get('email')?.touched" 
             class="err">
                 Email is required
             </div>
-
-            <input placeholder="password" formControlName="password" type="password">
+            <mat-form-field class="full-width" appearance="legacy">
+                Password <input matInput formControlName="password" type="password">
+            </mat-form-field>
             <div 
             *ngIf="this.regForm.get('password')?.invalid && this.regForm.get('password')?.touched"
             class="err">
                 Password is required (min length = 8)
             </div>
 
-            <input placeholder="name" formControlName="name" type="text">
+            <mat-form-field class="full-width" appearance="legacy">
+                Name <input matInput formControlName="name" type="text">
+            </mat-form-field>
             <div 
             *ngIf="this.regForm.get('name')?.invalid && this.regForm.get('name')?.touched"
             class="err">
