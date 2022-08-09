@@ -2,7 +2,7 @@ import { AuthService } from './../../../../services/auth.service';
 import { IUser, IMessage } from './../../interfaces';
 import { Observable, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -48,8 +48,22 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           }))
         }
         this.ws.onmessage = (event) => {
-          const msg = JSON.parse(event.data)
-          if(msg.method !== 'connection') {
+          const data = event.data
+          const msg = JSON.parse(data)
+          if(msg.method === 'message') {
+            this.messagesArray.push(msg)
+          }
+          if(msg.method === 'message-img') {
+            const data = {
+              ...msg,
+              method: 'message-img-save',
+              date: new Date(msg.date).toISOString(),
+              recipientID: +this.userID,
+              senderID: this.myID,
+            }
+            this.ws.send(JSON.stringify(data))
+          }   
+          if(msg.method === 'message-img-save') {
             this.messagesArray.push(msg)
           }
         }
@@ -68,7 +82,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     .pipe(
       take(1)
     )
-    .subscribe(data => this.messagesArray = [...this.messagesArray, ...data])
+    .subscribe(data => {
+      let arr = [...data].map((m: IMessage) => {
+        if(m.message?.includes('photos')) {
+          let data = {...m, photoPath: m.message}
+          delete data.message
+          return data
+        } 
+        return m
+      })
+      this.messagesArray = [...this.messagesArray, ...arr]
+    })
   }
 
   ngAfterViewChecked(): void {
@@ -105,20 +129,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.select.nativeElement.click()
     this.select.nativeElement.onchange = () => {
       const file: File = this.select.nativeElement.files![0]
-      if (!file) {
-        return
-      }
-      if (file.size > 10000000) {
-        console.log('File should be smaller than 1MB')
-        return
-      }
-      // this.sendFile(file)
+      this.ws.send(file)
     }
-  }
-
-  sendFile(file: File) {
-    this.ws.send
-    console.log('asd')
   }
 
 }

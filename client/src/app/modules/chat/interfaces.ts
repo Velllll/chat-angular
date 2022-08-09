@@ -10,7 +10,8 @@ export interface IUsers extends IUser {
 
 export interface IMessage {
   method: string;
-  message: string;
+  message?: string;
+  photoPath?: string;
   recipientID: number;
   senderID: number;
   date: string;

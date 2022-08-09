@@ -22,12 +22,15 @@
     <div class="empty" *ngIf="!messagesArray.length">
         You don't have messages
     </div>
-
+    
     <div class="messages" *ngFor="let message of messagesArray">
         <div [class]="{'message-conteinder': true, sender: myID === message.senderID, recipient: myID !== message.senderID}">
             <div class="msg-body">
-                <div class="msg">
+                <div class="msg" *ngIf="message?.message">
                     {{message.message}}
+                </div>
+                <div class="msg" *ngIf="!message?.message">
+                    <img [src]="message.photoPath" alt="">
                 </div>
                 <div class="date">
                     {{message.date.toLocaleString() | date}}

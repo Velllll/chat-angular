@@ -18,38 +18,7 @@
         margin: 50px 0 20px; 
     }
 
-    .photo-conteiner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .prev {
-            margin-right: 15px;
-            transform: scale(1.5);
-            cursor: pointer;
-        }
-        .next {
-            margin-left: 15px;
-            transform: scale(1.5);
-            cursor: pointer;
-        }
-
-        .usericon-photo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 340px;
-            width: 340px;
-
-            img {
-                height: 340px;
-                width: 340px;
-                object-fit: cover;
-                opacity: 0.9;
-                margin-top: 10px;
-            }
-        }
-    }
+    
     
     .name {
         font-size: 40px;

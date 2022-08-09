@@ -1,19 +1,21 @@
 import { Router } from '@angular/router';
 import { IUsers } from './../../interfaces';
-import { from, map, mergeMap, switchMap, take, tap } from 'rxjs';
+import { from, map, mergeMap, Subscription, switchMap, take, tap } from 'rxjs';
 import { AuthService } from './../../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.scss']
 })
-export class ChatsComponent implements OnInit {
+export class ChatsComponent implements OnInit, OnDestroy {
 
   userInfoArr: IUsers[] = []
   users: any
+  usersSubscription!: Subscription
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -36,7 +38,11 @@ export class ChatsComponent implements OnInit {
       mergeMap(o => o),
       tap(data => this.userInfoArr.push(data))
     )
-    .subscribe()
+    this.usersSubscription = this.users.subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.usersSubscription.unsubscribe()
   }
 
   goToChat(id: number) {

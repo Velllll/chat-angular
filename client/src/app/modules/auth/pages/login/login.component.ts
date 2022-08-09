@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit{
       "email": new FormControl('', 
       [Validators.required, Validators.email]
       ),
-      "password": new FormControl('user1234', 
+      "password": new FormControl('', 
       [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)]
       )
     })
@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit{
   login() {
     this.http.post<{message?: string, token?: string}>('http://localhost:5000/api/login', this.loginForm.value)
     .pipe(
-      take(1),
       tap(r => {
         if(!(r.message)) {
           this.authService.setToken(r.token!)
@@ -43,7 +42,8 @@ export class LoginComponent implements OnInit{
         } else {
           this.loginErr = true
         }
-      })
+      }),
+      take(1),
     )
     .subscribe()
   }

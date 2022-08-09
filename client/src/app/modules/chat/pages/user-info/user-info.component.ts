@@ -1,8 +1,8 @@
-import { from, Observable, switchMap, take, tap } from 'rxjs';
+import { Observable, switchMap, take, tap, Subscription, from } from 'rxjs';
 import { IUser, IPhotos } from './../../interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -10,10 +10,12 @@ import { Location } from '@angular/common';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit, OnDestroy {
 
   userInfo$!: Observable<IUser>
   userPhotos: {fileName: string; filePath: string}[] = []
+  photos$!: Observable<IPhotos>
+  photosSubscription!: Subscription
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -23,7 +25,8 @@ export class UserInfoComponent implements OnInit {
   ngOnInit(): void {
     const id = this.router.url.split('/')[2]
     this.userInfo$ = this.http.get<IUser>('http://localhost:5000/api/user/' + id)
-    this.http.get<IPhotos[]>('http://localhost:5000/api/photos/' + id)
+    
+    this.photos$ = this.http.get<IPhotos[]>('http://localhost:5000/api/photos/' + id)
     .pipe(
       take(1),
       switchMap(arr => {
@@ -34,7 +37,11 @@ export class UserInfoComponent implements OnInit {
         this.userPhotos.push({fileName: name, filePath: info.photoPath})
       })
     )
-    .subscribe()
+    this.photosSubscription = this.photos$.subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.photosSubscription.unsubscribe()
   }
 
   goBack() {

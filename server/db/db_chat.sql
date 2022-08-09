@@ -4,3 +4,23 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE messages(
+    messagID INT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(255),
+    senderID INT NOT NULL,
+    recipientID INT NOT NULL,
+    date VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE userchats(
+    chatID INT AUTO_INCREMENT PRIMARY KEY,
+    senderID INT NOT NULL,
+    recipientID INT NOT NULL
+);
+
+CREATE TABLE profilephotos(
+    photoID INT AUTO_INCREMENT PRIMARY KEY,
+    userID INT NOT NULL,
+    photoPath VARCHAR(255) NOT NULL
+);

@@ -36,7 +36,6 @@ export class RegistrationComponent implements OnInit {
   reg() {
     this.http.post<{message: string}>('http://localhost:5000/api/registration', this.regForm.value)
     .pipe(
-      take(1),
       tap({
         next: r => {
           if(!(r.message === "Duplicate")) {
@@ -45,7 +44,8 @@ export class RegistrationComponent implements OnInit {
             this.userExistErr = true
           }
         }
-      })
+      }),
+      take(1),
     )
     .subscribe()
   }

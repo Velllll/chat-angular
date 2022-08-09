@@ -12,8 +12,7 @@ export class CaruselComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   getPos() {
     return this.userPhotos.length - this.photoPos

@@ -90,6 +90,7 @@ class chatController {
 
     async setPhoto(req, res) {
         const file = req.files?.file
+        console.log(file)
         if(!file) return res.json({message: 'err'})
 
         const newFileName = encodeURI(Date.now() + '-userID=' + req.id + '-' + file.name )
