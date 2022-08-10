@@ -33,7 +33,6 @@ export class UsersComponent implements OnInit {
         return this.http.get<IUsers[]>("http://localhost:5000/api/usersbyemail/" + value)
       })
     )
-
   }
 
   openChat(userID: number) {

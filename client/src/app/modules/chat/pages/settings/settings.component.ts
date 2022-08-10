@@ -1,5 +1,5 @@
 import { IUsers, IPhotos } from './../../interfaces';
-import { Observable, take, tap, switchMap, from, Subscription } from 'rxjs';
+import { Observable, take, tap, switchMap, from, Subscription, takeUntil, Subject } from 'rxjs';
 import { AuthService } from './../../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
@@ -16,9 +16,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   userInfo$!: Observable<IUsers[]>
   userPhotos: {fileName: string; filePath: string}[] = []
-  photoPos: number = 1
-  photos$!: Observable<IPhotos>
-  photosSubscription!: Subscription
+  unsubscribe = new Subject()
+
   constructor(
     private http: HttpClient,
     private authService: AuthService
@@ -29,9 +28,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       headers: {"Authorization": "Bearer " + this.authService.getToken()}
     })
 
-    this.photos$ = this.userInfo$
-    .pipe(
-      take(1),
+    this.userInfo$.pipe(
       switchMap(info => {
         return this.http.get<IPhotos[]>('http://localhost:5000/api/photos/' + info[0].userID)
       }),
@@ -41,13 +38,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
       tap((info: IPhotos) => {
         const name = info.photoPath.split('/')[3].split(".")[0]
         this.userPhotos.push({fileName: name, filePath: info.photoPath})
-      })
+      }),
+      takeUntil(this.unsubscribe)
     )
-    this.photosSubscription = this.photos$.subscribe()
   }
 
   ngOnDestroy(): void {
-    this.photosSubscription.unsubscribe()
+    this.unsubscribe.next(true)
   }
 
   logout() {

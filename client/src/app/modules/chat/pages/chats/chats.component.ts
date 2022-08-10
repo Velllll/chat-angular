@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { IUsers } from './../../interfaces';
-import { from, map, mergeMap, Subscription, switchMap, take, tap } from 'rxjs';
+import { from, map, mergeMap, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { AuthService } from './../../../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -13,8 +13,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class ChatsComponent implements OnInit, OnDestroy {
 
   userInfoArr: IUsers[] = []
-  users: any
-  usersSubscription!: Subscription
+  unsubscribe = new Subject()
 
   constructor(
     private http: HttpClient,
@@ -23,7 +22,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.users = this.http.get<number[]>('http://localhost:5000/api/mychats', {
+    this.http.get<number[]>('http://localhost:5000/api/mychats', {
         headers: {"Authorization": "Bearer " + this.authService.getToken()}
       })
     .pipe(
@@ -36,13 +35,14 @@ export class ChatsComponent implements OnInit, OnDestroy {
         )
       }),
       mergeMap(o => o),
-      tap(data => this.userInfoArr.push(data))
+      tap(data => this.userInfoArr.push(data)),
+      takeUntil(this.unsubscribe)
     )
-    this.usersSubscription = this.users.subscribe()
+    .subscribe()
   }
 
   ngOnDestroy(): void {
-    this.usersSubscription.unsubscribe()
+    this.unsubscribe.next(true)
   }
 
   goToChat(id: number) {
