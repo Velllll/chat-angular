@@ -37,6 +37,7 @@ export class UserInfoComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.unsubscribe)
     )
+    .subscribe()
 
   }
 

@@ -1,3 +1,4 @@
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule} from '@angular/material/input';
@@ -13,7 +14,6 @@ import { UserInfoComponent } from './pages/user-info/user-info.component';
 import { FormsModule } from '@angular/forms';
 import { CaruselComponent } from './components/carusel/carusel.component';
 
-
 @NgModule({
   declarations: [
     ChatsComponent,
@@ -22,7 +22,8 @@ import { CaruselComponent } from './components/carusel/carusel.component';
     ChatComponent,
     MainComponent,
     UserInfoComponent,
-    CaruselComponent
+    CaruselComponent, 
+    SearchFilterPipe
   ],
   imports: [
     CommonModule,

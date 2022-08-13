@@ -14,6 +14,7 @@ export class ChatsComponent implements OnInit, OnDestroy {
 
   userInfoArr: IUsers[] = []
   unsubscribe = new Subject()
+  search: string = ''
 
   constructor(
     private http: HttpClient,

@@ -1,6 +1,25 @@
 .chats {
     padding-bottom: 70px;
     overflow: hidden;
+
+    .search {
+        width: 100%;
+        text-align: center;
+        .full-width {
+            width: 60%;
+            
+            input {
+                background-color:rgb(241, 240, 240);
+                line-height: 40px;
+                font-size: 30px;
+                padding: 0 10px;
+                border-radius: 10px;
+                
+            }
+        }
+    }
+    
+    
     .empty {
         text-align: center;
         margin-top: 80px;

@@ -1,5 +1,19 @@
 <div class="chats">
-    <div class="chat" *ngFor="let user of userInfoArr">
+    <div class="search">
+        <mat-form-field class="full-width" appearance="legacy">
+            <input matInput [(ngModel)]="search">
+        </mat-form-field>
+    </div>
+
+    <div class="empty" *ngIf="!userInfoArr.length">
+        You do not have chats
+    </div>
+
+    <div class="empty" *ngIf="!(userInfoArr | searchFilter: search).length">
+        Users do not found
+    </div>
+
+    <div class="chat" *ngFor="let user of userInfoArr | searchFilter: search">
         <div class="info-row" (click)="goToChat(user.userID)">
             <div class="icon" *ngIf="!user.photoPath; else iconPhoto"><span>{{user.name.slice(0, 1).toUpperCase()}}</span></div>
             <ng-template #iconPhoto>

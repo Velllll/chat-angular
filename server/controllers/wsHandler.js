@@ -48,7 +48,6 @@ class ws{
                             console.log('create chat error')
                         })
                         break;
-                    
                 } 
             }
         })
